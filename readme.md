@@ -6,7 +6,7 @@ idea derived from [this](https://github.com/quick-lint/quick-lint-js/issues/165)
 ![](./github/plot.png)
 
 ## Requirements
-- python 3.5 >
+- python >= 3.5
 - matplotlib
 ## Usage
 1. Ensure requirements are installed/ working.
