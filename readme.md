@@ -1,6 +1,8 @@
 # Github Actions Runtime Graph
 > output runtime graphs for github actions ci workflows
 
+idea derived from [this](https://github.com/quick-lint/quick-lint-js/issues/165) issue.
+
 ![](./github/plot.png)
 
 ## Requirements
