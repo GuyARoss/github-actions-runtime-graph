@@ -8,7 +8,7 @@ from github import GithubApi, GithubRepo
 from plots import create_time_plt
 
 def main(repo: GithubRepo) -> NoReturn:
-    for workflow in repo.workflows()[3:4]:
+    for workflow in repo.workflows():
         wid = workflow['id']
         create_time_plt(
             name=workflow.get('name', 'n/ a'),
