@@ -1,29 +1,33 @@
 #/usr/bin/python3
 
 import requests
+import argparse
 from typing import NoReturn, List
 
 from github import GithubApi, GithubRepo
+from plots import create_time_plt
 
 def main(repo: GithubRepo) -> NoReturn:
-    workflow_ids = [w['id'] for w in repo.workflows()]
-    # print(workflow_ids)
+    for workflow in repo.workflows()[3:4]:
+        wid = workflow['id']
+        create_time_plt(
+            name=workflow.get('name', 'n/ a'),
+            timings=[repo.workflow_run_timings(r['id']).get('run_duration_ms', 0) / 1000 for r in repo.workflow_runs(wid)]
+        )
 
-    # print([data['id'] for data in repo.workflow_runs(2991279)])
-
-    # print(repo.workflow_run_timings(620771442)['run_duration_ms'])
-
-    ordered_run_timings = {}
-    for wid in workflow_ids:
-        workflow_runs = repo.workflow_runs(wid)
-        ordered_run_timings[wid] = [r['id'] for r in workflow_runs]
-
-    print(ordered_run_timings.keys())
     
 if __name__ == '__main__':
+    parser = argparse.ArgumentParser()
+    parser.add_argument('--user', '--user', help='username of the generated token')
+    parser.add_argument('--token', '--token', help='generated github token')
+    parser.add_argument('--repo', '--repo', help='repo of the workflows')
+    parser.add_argument('--owner', '--owner', help='owner of the repo')
+
+    args = parser.parse_args()
+
     gh_api = GithubApi(credentials={
-        'username': 'GuyARoss',
-        'password': ''
+        'username': args['user'],
+        'password': args['token']
     })
 
-    main(GithubRepo(gh_api, 'quick-lint', 'quick-lint-js'))
+    main(GithubRepo(gh_api, args['owner'], args['repo']))
