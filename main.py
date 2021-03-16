@@ -26,8 +26,8 @@ if __name__ == '__main__':
     args = parser.parse_args()
 
     gh_api = GithubApi(credentials={
-        'username': args['user'],
-        'password': args['token']
+        'username': args.user,
+        'password': args.token
     })
 
-    main(GithubRepo(gh_api, args['owner'], args['repo']))
+    main(GithubRepo(gh_api, args.owner, args.repo))
